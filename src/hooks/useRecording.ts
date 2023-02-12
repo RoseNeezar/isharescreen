@@ -1,7 +1,11 @@
 import dayjs from "dayjs";
 import { useMemo, useReducer } from "react";
+import { env } from "../env/client.mjs";
 
-const MAX_RECORDING_DURATION_IN_MINUTE = 10;
+export const MAX_RECORDING_DURATION_IN_MINUTE = parseInt(
+  env.NEXT_PUBLIC_MAX_RECORDING_DURATION_IN_MINUTE,
+  10
+);
 
 type State = {
   isRecording: boolean;
