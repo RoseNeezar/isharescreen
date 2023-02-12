@@ -32,7 +32,7 @@ const Index: NextPage = () => {
           </h1>
           <p className="mx-auto mt-6 max-w-2xl text-lg tracking-tight text-white">
             Effortless screen sharing, with voice recording and easy download
-            options - that's what this app delivers.
+            options - that is what this app delivers.
           </p>
           <div className="mt-10 flex justify-center space-x-6">
             <Link href="/main">

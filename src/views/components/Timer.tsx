@@ -2,11 +2,11 @@ import dayjs from "dayjs";
 import { FC, useState, useEffect } from "react";
 import { MAX_RECORDING_DURATION_IN_MINUTE } from "../../hooks/useRecording";
 
-const Timer: FC<{ startAt: any; endAt: any; stopRecording: any }> = ({
-  startAt,
-  endAt,
-  stopRecording,
-}) => {
+const Timer: FC<{
+  startAt: Date;
+  endAt: Date | null;
+  stopRecording: () => void;
+}> = ({ startAt, endAt, stopRecording }) => {
   const [secondsLeft, setSecondsLeft] = useState(
     MAX_RECORDING_DURATION_IN_MINUTE * 60
   );

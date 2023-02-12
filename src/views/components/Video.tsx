@@ -26,5 +26,6 @@ const Video = memo(({ blob }: Props) => {
     </div>
   );
 });
+Video.displayName = "Video";
 
 export default Video;

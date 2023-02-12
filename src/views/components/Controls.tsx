@@ -19,7 +19,7 @@ type Props = {
   endAt: Date | null;
   toggleMute: () => void;
   stopRecording: () => void;
-  startRecording: () => void;
+  startRecording: () => Promise<void>;
   blob: Blob | null;
   isMuted: boolean;
 };
