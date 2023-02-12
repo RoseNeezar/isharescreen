@@ -1,7 +1,11 @@
 import dayjs from "dayjs";
-import { useCallback, useMemo, useReducer } from "react";
+import { useMemo, useReducer } from "react";
+import { env } from "../env/client.mjs";
 
-const MAX_RECORDING_DURATION_IN_MINUTE = 10;
+export const MAX_RECORDING_DURATION_IN_MINUTE = parseInt(
+  env.NEXT_PUBLIC_MAX_RECORDING_DURATION_IN_MINUTE,
+  10
+);
 
 type State = {
   isRecording: boolean;
@@ -11,11 +15,9 @@ type State = {
   startAt: Date | null;
 };
 
-type Action = (state: State) => State;
-
-const recordReducer = (state: State, action: Action) => ({
+const recordReducer = (state: State, action: Partial<State>) => ({
   ...state,
-  ...action(state),
+  ...action,
 });
 
 export const useRecording = () => {
@@ -27,10 +29,7 @@ export const useRecording = () => {
     startAt: null,
   });
 
-  const { blob, isMuted, isRecording, recorder, startAt } = useMemo(
-    () => state,
-    [state]
-  );
+  const { blob, isMuted, isRecording, recorder, startAt } = state;
 
   const endAt = useMemo(
     () =>
@@ -42,10 +41,11 @@ export const useRecording = () => {
     [startAt]
   );
 
-  const startRecording = useCallback(async () => {
+  const startRecording = async () => {
     const videoStream = await navigator.mediaDevices.getDisplayMedia({
       video: { mediaSource: "screen" } as MediaTrackConstraints,
     });
+
     let stream: MediaStream;
 
     if (isMuted) {
@@ -64,33 +64,29 @@ export const useRecording = () => {
     const mimeType = MediaRecorder.isTypeSupported("video/webm; codecs=vp9")
       ? "video/webm; codecs=vp9"
       : "video/webm";
-
     const recorder = new MediaRecorder(stream, { mimeType });
     recorder.start();
 
-    setState(() => ({
-      ...state,
+    setState({
       isRecording: true,
       recorder: recorder,
       startAt: new Date(),
-    }));
-  }, [setState]);
+    });
+  };
 
   const stopRecording = () => {
     if (!recorder) return;
 
-    setState((s) => ({
-      ...state,
+    setState({
       isRecording: false,
       startAt: null,
-    }));
+    });
 
     recorder.ondataavailable = (e) => {
       const blob = new Blob([e.data], { type: e.data.type });
-      setState((s) => ({
-        ...state,
+      setState({
         blob,
-      }));
+      });
     };
 
     if (recorder.state === "recording") {
@@ -104,10 +100,9 @@ export const useRecording = () => {
   };
 
   const toggleMute = () => {
-    setState((s) => ({
-      ...state,
-      isMuted: !s.isMuted,
-    }));
+    setState({
+      isMuted: !isMuted,
+    });
   };
 
   return {
