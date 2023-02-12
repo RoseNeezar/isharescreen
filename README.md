@@ -1,28 +1,39 @@
-# Create T3 App
+# ISHARESCREEN
 
-This is a [T3 Stack](https://create.t3.gg/) project bootstrapped with `create-t3-app`.
+Screen sharing application.
 
-## What's next? How do I make an app with this?
+## Features
 
-We try to keep this project as simple as possible, so you can start with just the scaffolding we set up for you, and add additional things later when they become necessary.
+- Record video screen
+- Record audio screen
+- Download recordings
 
-If you are not familiar with the different technologies used in this project, please refer to the respective docs. If you still are in the wind, please join our [Discord](https://t3.gg/discord) and ask for help.
+## Tech Stack
 
-- [Next.js](https://nextjs.org)
-- [NextAuth.js](https://next-auth.js.org)
-- [Prisma](https://prisma.io)
-- [Tailwind CSS](https://tailwindcss.com)
-- [tRPC](https://trpc.io)
+### Frontend
 
-## Learn More
+- Reactjs
+- Typescript
+- Tailwind css
 
-To learn more about the [T3 Stack](https://create.t3.gg/), take a look at the following resources:
+## Installation
 
-- [Documentation](https://create.t3.gg/)
-- [Learn the T3 Stack](https://create.t3.gg/en/faq#what-learning-resources-are-currently-available) — Check out these awesome tutorials
+Use the env.example file to know which variable is needed from firebase.
 
-You can check out the [create-t3-app GitHub repository](https://github.com/t3-oss/create-t3-app) — your feedback and contributions are welcome!
+```bash
+cp .env.example .env
+```
 
-## How do I deploy this?
+```bash
+yarn i && yarn dev
+```
 
-Follow our deployment guides for [Vercel](https://create.t3.gg/en/deployment/vercel), [Netlify](https://create.t3.gg/en/deployment/netlify) and [Docker](https://create.t3.gg/en/deployment/docker) for more information.
+App runs by default at http://localhost:3030
+
+## Helpers
+
+Install lazydocker on your system. This tool can help visualise container logs.
+
+## License
+
+[MIT](https://choosealicense.com/licenses/mit/)
