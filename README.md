@@ -12,7 +12,7 @@ Screen sharing application.
 
 ### Frontend
 
-- Reactjs
+- Nextjs
 - Typescript
 - Tailwind css
 
