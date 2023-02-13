@@ -46,14 +46,17 @@ const DownloadButton: FC<{ blob: Pick<Props, "blob">["blob"] }> = ({
           Download clip
         </button>
       )}
-      <DialogContent className="bg-slate-800 sm:max-w-[425px]">
+      <DialogContent className="bg-base-100 sm:max-w-[425px]">
         <DialogHeader>
-          <DialogTitle className="text-primary">Download clip</DialogTitle>
+          <DialogTitle className="text-primary ">Download clip</DialogTitle>
           <DialogDescription>Enter name of the file</DialogDescription>
         </DialogHeader>
         <div className="grid gap-4 py-4">
           <div className="grid grid-cols-4 items-center gap-4">
-            <Label htmlFor="name" className="text-right">
+            <Label
+              htmlFor="name"
+              className="text-right font-bold text-primary "
+            >
               Name
             </Label>
             <Input
