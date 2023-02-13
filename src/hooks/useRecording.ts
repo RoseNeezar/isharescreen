@@ -42,6 +42,7 @@ export const useRecording = () => {
   );
 
   const startRecording = async () => {
+    setState({ blob: null });
     const videoStream = await navigator.mediaDevices.getDisplayMedia({
       video: { mediaSource: "screen" } as MediaTrackConstraints,
     });

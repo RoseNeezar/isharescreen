@@ -23,15 +23,26 @@ const Timer: FC<{
     return () => {
       clearInterval(intervalId);
     };
-  }, []);
+  }, [secondsLeft]);
 
   const minutes = Math.floor(secondsLeft / 60);
   const seconds = secondsLeft % 60;
 
   return (
-    <div className=" mb-10 w-full text-center">
-      <div className="text-4xl text-white">
-        {minutes}:{seconds < 10 ? `0${seconds}` : seconds}
+    <div className="grid auto-cols-max grid-flow-col gap-5 text-center">
+      <div className="rounded-box flex flex-col bg-neutral p-2 text-neutral-content">
+        <span className="countdown font-mono text-5xl">
+          {/* @ts-ignore */}
+          <span style={{ "--value": minutes }}></span>
+        </span>
+        min
+      </div>
+      <div className="rounded-box flex flex-col bg-neutral p-2 text-neutral-content">
+        <span className="countdown font-mono text-5xl">
+          {/* @ts-ignore */}
+          <span style={{ "--value": seconds }}></span>
+        </span>
+        sec
       </div>
     </div>
   );

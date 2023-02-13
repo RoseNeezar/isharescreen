@@ -14,7 +14,7 @@ const Main = () => {
     stopRecording,
     blob,
   } = useRecording();
-  console.log("rerender", blob);
+
   return (
     <div className="min-w-0 flex-1  xl:flex">
       <div className="border-b border-gray-200  xl:w-64 xl:flex-shrink-0 xl:border-b-0 xl:border-r xl:border-gray-200">
@@ -34,13 +34,6 @@ const Main = () => {
 
       <div className=" lg:min-w-0 lg:flex-1">
         <div className="h-full px-4 py-6 sm:px-6 lg:px-8">
-          {startAt && (
-            <Timer
-              endAt={endAt}
-              startAt={startAt}
-              stopRecording={stopRecording}
-            />
-          )}
           <Video blob={blob} />
         </div>
       </div>
