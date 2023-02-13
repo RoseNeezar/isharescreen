@@ -77,14 +77,14 @@ function MobileNavigation() {
 
 export function Header() {
   return (
-    <header className="py-10 ">
+    <header className="py-10">
       <Container>
         <nav className="relative z-50 text-sm">
           <ul className="flex items-center">
             <li className="ml-auto hidden md:block">
               <Link
                 href=""
-                className="text rounded-lg py-3 px-3 text-lg text-white line-through hover:bg-rose-100 hover:text-rose-900"
+                className="text rounded-lg py-3 px-3 text-lg  text-base-content line-through hover:bg-rose-100 hover:text-rose-900"
               ></Link>
             </li>
             <li className="ml-auto md:ml-8">

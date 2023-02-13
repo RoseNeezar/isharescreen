@@ -5,6 +5,7 @@ specifiers:
   '@heroicons/react': ^1.0.6
   '@next-auth/prisma-adapter': ^1.0.5
   '@prisma/client': ^4.9.0
+  '@radix-ui/react-alert-dialog': ^1.0.2
   '@radix-ui/react-dialog': ^1.0.2
   '@radix-ui/react-label': ^2.0.0
   '@tailwindcss/forms': ^0.5.2
@@ -52,6 +53,7 @@ dependencies:
   '@heroicons/react': 1.0.6_react@18.2.0
   '@next-auth/prisma-adapter': 1.0.5_dg7vpluvw26u4z34xat624ruwa
   '@prisma/client': 4.10.0_prisma@4.10.0
+  '@radix-ui/react-alert-dialog': 1.0.2_5ndqzdd6t4rivxsukjv3i3ak2q
   '@radix-ui/react-dialog': 1.0.2_5ndqzdd6t4rivxsukjv3i3ak2q
   '@radix-ui/react-label': 2.0.0_biqbaboplfbrettd7655fr4n2y
   '@tailwindcss/forms': 0.5.3_tailwindcss@3.2.4
@@ -418,6 +420,25 @@ packages:
     resolution: {integrity: sha512-3e7rn8FDMin4CgeL7Z/49smCA3rFYY3Ha2rUQ7HRWFadS5iCRw08ZgVT1LaNTCNqgvrUiyczLflrVrF0SRQtNA==}
     dependencies:
       '@babel/runtime': 7.20.13
+    dev: false
+
+  /@radix-ui/react-alert-dialog/1.0.2_5ndqzdd6t4rivxsukjv3i3ak2q:
+    resolution: {integrity: sha512-0MtxV53FaEEBOKRgyLnEqHZKKDS5BldQ9oUBsKVXWI5FHbl2jp35qs+0aJET+K5hJDsc40kQUzP7g+wC7tqrqA==}
+    peerDependencies:
+      react: ^16.8 || ^17.0 || ^18.0
+      react-dom: ^16.8 || ^17.0 || ^18.0
+    dependencies:
+      '@babel/runtime': 7.20.13
+      '@radix-ui/primitive': 1.0.0
+      '@radix-ui/react-compose-refs': 1.0.0_react@18.2.0
+      '@radix-ui/react-context': 1.0.0_react@18.2.0
+      '@radix-ui/react-dialog': 1.0.2_5ndqzdd6t4rivxsukjv3i3ak2q
+      '@radix-ui/react-primitive': 1.0.1_biqbaboplfbrettd7655fr4n2y
+      '@radix-ui/react-slot': 1.0.1_react@18.2.0
+      react: 18.2.0
+      react-dom: 18.2.0_react@18.2.0
+    transitivePeerDependencies:
+      - '@types/react'
     dev: false
 
   /@radix-ui/react-compose-refs/1.0.0_react@18.2.0:

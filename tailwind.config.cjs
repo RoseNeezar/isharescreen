@@ -4,6 +4,9 @@ const defaultTheme = require("tailwindcss/defaultTheme");
 module.exports = {
   darkMode: ["class", '[data-theme="dark"]'],
   content: ["./src/**/*.{js,ts,jsx,tsx}"],
+  daisyui: {
+    themes: ["cupcake", "dark", "cmyk"],
+  },
   theme: {
     fontSize: {
       xs: ["0.75rem", { lineHeight: "1rem" }],

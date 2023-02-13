@@ -63,7 +63,7 @@ const Home: NextPage = () => {
                     <Disclosure.Button
                       as="a"
                       href="#"
-                      className="block rounded-md bg-indigo-800 px-3 py-2 text-base font-medium text-white"
+                      className="block rounded-md bg-indigo-800 px-3 py-2 text-base font-medium text-base-content"
                     >
                       Coming Soon
                     </Disclosure.Button>
@@ -72,7 +72,7 @@ const Home: NextPage = () => {
               </>
             )}
           </Disclosure>
-          <div className="mx-auto w-full max-w-7xl flex-grow lg:flex xl:px-8">
+          <div className="mx-auto w-full max-w-full flex-grow  lg:flex xl:px-8">
             <MainView />
           </div>
         </div>

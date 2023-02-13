@@ -2,6 +2,12 @@ import { DialogClose } from "@radix-ui/react-dialog";
 import { Mic, MicOff, Pause, Play } from "lucide-react";
 import { FC, useState } from "react";
 import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogContent,
+  AlertDialogTrigger,
+} from "../../components/AlertDialog";
+import {
   Dialog,
   DialogContent,
   DialogDescription,
@@ -12,6 +18,7 @@ import {
 } from "../../components/Dialog";
 import { Input } from "../../components/Input";
 import { Label } from "../../components/Label";
+import Timer from "./Timer";
 
 type Props = {
   isRecording: boolean;
@@ -73,6 +80,50 @@ const DownloadButton: FC<{ blob: Pick<Props, "blob">["blob"] }> = ({
   );
 };
 
+const RecordVideoModal: FC<
+  Pick<
+    Props,
+    "isRecording" | "startRecording" | "stopRecording" | "endAt" | "startAt"
+  >
+> = ({ isRecording, startRecording, stopRecording, endAt, startAt }) => {
+  return (
+    <AlertDialog
+      open={isRecording}
+      onOpenChange={(e) => {
+        if (e === false) {
+          stopRecording();
+        }
+      }}
+    >
+      <AlertDialogTrigger asChild>
+        <button
+          className="btn-secondary btn-circle btn text-base-content"
+          onClick={startRecording}
+        >
+          <Play />
+        </button>
+      </AlertDialogTrigger>
+      <AlertDialogContent className="flex  h-1/2 max-w-fit flex-col   justify-center bg-transparent p-0">
+        {startAt && (
+          <Timer
+            endAt={endAt}
+            startAt={startAt}
+            stopRecording={stopRecording}
+          />
+        )}
+        <div className="tooltip mt-20" data-tip="Stop recording">
+          <AlertDialogAction
+            className="h-32 w-32 rounded-full bg-secondary text-base-content hover:bg-secondary-focus"
+            onClick={stopRecording}
+          >
+            <Pause className="h-16  w-16 text-3xl" />
+          </AlertDialogAction>{" "}
+        </div>
+      </AlertDialogContent>
+    </AlertDialog>
+  );
+};
+
 const Controls = ({
   isRecording,
   stopRecording,
@@ -80,6 +131,8 @@ const Controls = ({
   isMuted,
   startRecording,
   toggleMute,
+  endAt,
+  startAt,
 }: Props) => {
   return (
     <>
@@ -90,7 +143,7 @@ const Controls = ({
         </div>
 
         <div className="my-5 flex w-full items-center">
-          <div className="w-20 text-lg text-white">Audio</div>
+          <div className="w-20 text-lg text-base-content">Audio</div>
           {isMuted ? (
             <button
               className={`${
@@ -99,7 +152,7 @@ const Controls = ({
               onClick={toggleMute}
               disabled={isRecording}
             >
-              <MicOff className="text-white" />
+              <MicOff className="text-base-content" />
             </button>
           ) : (
             <button
@@ -109,27 +162,19 @@ const Controls = ({
               onClick={toggleMute}
               disabled={isRecording}
             >
-              <Mic className="text-white" />
+              <Mic className="text-base-content" />
             </button>
           )}
         </div>
         <div className="my-5 flex w-full items-center">
-          <div className="w-20 text-lg text-white">Record</div>
-          {isRecording ? (
-            <button
-              className="btn-secondary btn-circle btn text-white"
-              onClick={stopRecording}
-            >
-              <Pause />
-            </button>
-          ) : (
-            <button
-              className="btn-secondary btn-circle btn text-white"
-              onClick={startRecording}
-            >
-              <Play />
-            </button>
-          )}
+          <div className="w-20 text-lg text-base-content">Record</div>
+          <RecordVideoModal
+            endAt={endAt}
+            startAt={startAt}
+            isRecording={isRecording}
+            startRecording={startRecording}
+            stopRecording={stopRecording}
+          />
         </div>
       </div>
     </>
