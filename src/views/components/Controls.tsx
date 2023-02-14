@@ -1,6 +1,6 @@
 import { DialogClose } from "@radix-ui/react-dialog";
 import { Mic, MicOff, Pause, Play } from "lucide-react";
-import { FC, useState } from "react";
+import { FC, useEffect, useState } from "react";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -19,6 +19,8 @@ import {
 import { Input } from "../../components/Input";
 import { Label } from "../../components/Label";
 import Timer from "./Timer";
+import Joyride, { CallBackProps, STATUS, Step } from "react-joyride";
+import { useSetState } from "react-use";
 
 type Props = {
   isRecording: boolean;
@@ -127,6 +129,11 @@ const RecordVideoModal: FC<
   );
 };
 
+interface State {
+  run: boolean;
+  steps: Step[];
+}
+
 const Controls = ({
   isRecording,
   stopRecording,
@@ -137,11 +144,67 @@ const Controls = ({
   endAt,
   startAt,
 }: Props) => {
+  const [{ run, steps }, setState] = useSetState<State>({
+    run: false,
+    steps: [
+      {
+        content: (
+          <div className="text-lg font-bold text-base-content">
+            Download Your Recording Here!
+          </div>
+        ),
+        disableBeacon: true,
+        hideFooter: true,
+        placement: "left",
+        styles: {
+          options: {
+            zIndex: 10000,
+            backgroundColor: "rgb(255,20,147)",
+            arrowColor: "rgb(255,20,147)",
+          },
+        },
+        target: ".download-video",
+      },
+    ],
+  });
+
+  const handleJoyrideCallback = (data: CallBackProps) => {
+    const { status } = data;
+    const finishedStatuses: string[] = [STATUS.FINISHED, STATUS.SKIPPED];
+
+    if (finishedStatuses.includes(status)) {
+      setState({ run: false });
+    }
+  };
+
+  useEffect(() => {
+    if (blob) {
+      setState({
+        run: true,
+      });
+    }
+  }, [blob]);
+
   return (
     <>
+      <Joyride
+        callback={handleJoyrideCallback}
+        continuous
+        hideCloseButton
+        run={run}
+        scrollToFirstStep
+        showProgress
+        showSkipButton
+        steps={steps}
+        styles={{
+          options: {
+            zIndex: 10000,
+          },
+        }}
+      />
       <div className="text-2xl font-bold text-secondary">Controls</div>
       <div className="flex flex-col items-center">
-        <div className="my-5 flex w-full items-center">
+        <div className="download-video my-5 flex w-full items-center">
           <DownloadButton blob={blob} />
         </div>
 
