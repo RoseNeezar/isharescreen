@@ -1,3 +1,5 @@
+//@ts-nocheck
+
 const defaultTheme = require("tailwindcss/defaultTheme");
 
 /** @type {import('tailwindcss').Config} */
@@ -51,6 +53,9 @@ module.exports = {
       },
     },
   },
-  //@ts-ignore
-  plugins: [require("tailwindcss-animate"), require("daisyui")],
+  plugins: [
+    require("tailwindcss-animate"),
+    require("daisyui"),
+    require("@tailwindcss/aspect-ratio"),
+  ],
 };
