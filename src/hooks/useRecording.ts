@@ -1,5 +1,5 @@
 import dayjs from "dayjs";
-import { useMemo, useReducer } from "react";
+import { useEffect, useMemo, useReducer } from "react";
 import { env } from "../env/client.mjs";
 
 export const MAX_RECORDING_DURATION_IN_MINUTE = parseInt(
@@ -19,7 +19,6 @@ const recordReducer = (state: State, action: Partial<State>) => ({
   ...state,
   ...action,
 });
-
 export const useRecording = () => {
   const [state, setState] = useReducer(recordReducer, {
     isRecording: false,
@@ -30,6 +29,8 @@ export const useRecording = () => {
   });
 
   const { blob, isMuted, isRecording, recorder, startAt } = state;
+
+  let stream: MediaStream;
 
   const endAt = useMemo(
     () =>
@@ -46,8 +47,6 @@ export const useRecording = () => {
     const videoStream = await navigator.mediaDevices.getDisplayMedia({
       video: { mediaSource: "screen" } as MediaTrackConstraints,
     });
-
-    let stream: MediaStream;
 
     if (isMuted) {
       stream = videoStream;
@@ -94,10 +93,31 @@ export const useRecording = () => {
       recorder.stop();
     }
 
-    if (recorder.stream) {
-      recorder.stream.getVideoTracks().forEach((s) => s.stop());
-      recorder.stream.getAudioTracks().forEach((s) => s.stop());
+    if (stream) {
+      stream.getVideoTracks().forEach((s) => s.stop());
+      stream.getAudioTracks().forEach((s) => s.stop());
     }
+  };
+
+  const stopSharing = () => {
+    if (recorder && recorder.state === "recording") {
+      recorder.ondataavailable = (e) => {
+        const blob = new Blob([e.data], { type: e.data.type });
+        setState({ blob });
+      };
+      recorder.stop();
+    }
+
+    if (stream) {
+      stream.getTracks().forEach((track) => {
+        track.stop();
+      });
+    }
+
+    setState({
+      isRecording: false,
+      startAt: null,
+    });
   };
 
   const toggleMute = () => {
@@ -105,6 +125,21 @@ export const useRecording = () => {
       isMuted: !isMuted,
     });
   };
+
+  useEffect(() => {
+    if (recorder && recorder.stream) {
+      recorder.stream
+        .getVideoTracks()[0]
+        ?.addEventListener("ended", stopSharing);
+    }
+    return () => {
+      if (recorder && recorder.stream) {
+        recorder.stream
+          .getVideoTracks()[0]
+          ?.removeEventListener("ended", stopSharing);
+      }
+    };
+  }, [recorder, stopSharing]);
 
   return {
     isRecording,
