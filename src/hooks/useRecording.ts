@@ -30,8 +30,6 @@ export const useRecording = () => {
 
   const { blob, isMuted, isRecording, recorder, startAt } = state;
 
-  let stream: MediaStream;
-
   const endAt = useMemo(
     () =>
       startAt
@@ -47,6 +45,8 @@ export const useRecording = () => {
     const videoStream = await navigator.mediaDevices.getDisplayMedia({
       video: { mediaSource: "screen" } as MediaTrackConstraints,
     });
+
+    let stream: MediaStream;
 
     if (isMuted) {
       stream = videoStream;
@@ -93,12 +93,11 @@ export const useRecording = () => {
       recorder.stop();
     }
 
-    if (stream) {
-      stream.getVideoTracks().forEach((s) => s.stop());
-      stream.getAudioTracks().forEach((s) => s.stop());
+    if (recorder.stream) {
+      recorder.stream.getVideoTracks().forEach((s) => s.stop());
+      recorder.stream.getAudioTracks().forEach((s) => s.stop());
     }
   };
-
   const stopSharing = () => {
     if (recorder && recorder.state === "recording") {
       recorder.ondataavailable = (e) => {
@@ -108,8 +107,8 @@ export const useRecording = () => {
       recorder.stop();
     }
 
-    if (stream) {
-      stream.getTracks().forEach((track) => {
+    if (recorder?.stream) {
+      recorder.stream.getTracks().forEach((track) => {
         track.stop();
       });
     }
