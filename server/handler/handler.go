@@ -1,30 +1,27 @@
 package handler
 
 import (
-	"net/http"
+	"isharescreen/server/model"
 	"os"
 
 	"github.com/gin-gonic/gin"
 )
 
-type Handler struct{}
+type Handler struct {
+	UserService model.UserService
+}
 
 type Config struct {
-	R *gin.Engine
+	R           *gin.Engine
+	UserService model.UserService
 }
 
 func NewHandler(c *Config) {
-	h := &Handler{}
+	h := &Handler{
+		UserService: c.UserService,
+	}
 
 	g := c.R.Group(os.Getenv("ACCOUNT_API_URL"))
 
 	g.GET("/me", h.Me)
-}
-
-// Me handler calls services for getting
-// a user's details
-func (h *Handler) Me(c *gin.Context) {
-	c.JSON(http.StatusOK, gin.H{
-		"hello": "it's me",
-	})
 }
